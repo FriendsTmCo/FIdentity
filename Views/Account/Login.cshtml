@@ -1,0 +1,64 @@
+﻿@model Fri2Ends.Identity.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/main.css" />
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="main">
+        <div class="contetn">
+            <div class="inputs">
+                <div class="header">
+                    <h3>MCoin Login</h3>
+                    <hr>
+                </div>
+                <form asp-action="Login" asp-antiforgery="true" method="post">
+                    <div class="controller">
+                        <div class="form-controller">
+                            <label class="form-lbl" asp-for="UserName"></label>
+                            <input type="tel" asp-for="UserName" placeholder="Phone Number,User Namme,Email" />
+                            <span asp-validation-for="UserName"></span>
+                        </div>
+                        <br>
+                        <div class="form-controller">
+                            <label class="form-lbl" asp-for="Password"></label>
+                            <input type="password" asp-for="Password" placeholder="password" />
+                            <span asp-validation-for="Password"></span>
+                        </div>
+                        <br>
+                        <div class="form-checkbox">
+                            <label class="form-lbl" for="remember">Remember Me</label>
+                            <input type="checkbox" id="remember" />
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn-success block">Login</button>
+                        </div>
+                        <a href="singUp.html">Create Account</a>
+                        <br>
+                        <a href="singUp.html">Forget Password</a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="images">
+                <img src="/image/login.png" class="img-login" alt="login">
+            </div>
+        </div>
+    </div>
+    <script src="~/vendors/js/vendors.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/core/app-menu.js"></script>
+    <script src="~/js/core/app.js"></script>
+    <script src="~/js/scripts/components.js"></script>
+</body>
+</html>

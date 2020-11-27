@@ -1,0 +1,17 @@
+﻿###Sign  Up Error Codes
+error id 0 = success
+error id -1 = Exist item 
+error id -2 = Exist Email
+error id -3 = Exist User Name
+error id -4 = System errors
+
+###Finished
+
+
+##Login Error Codes
+error id -5 = User Not Found
+error id -6 = Password Not Match
+error id -7 = User Not Active
+
+
+

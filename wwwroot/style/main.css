@@ -1,0 +1,119 @@
+body {
+  background: url("/image/auth-bg.jpg") rgba(66, 59, 59, 0.5) no-repeat;
+  background-attachment: fixed;
+}
+
+.main {
+  margin: 10% auto;
+  background: white;
+  width: 60%;
+  height: 500px;
+  border-radius: 15px;
+  -webkit-box-shadow: rgba(105, 97, 97, 0.445) 2px 2px 15px 10px;
+          box-shadow: rgba(105, 97, 97, 0.445) 2px 2px 15px 10px;
+}
+
+@media (max-width: 960px) {
+  .main {
+    width: 75%;
+  }
+}
+
+@media (max-width: 760px) {
+  .main .images {
+    display: none;
+  }
+}
+
+.images {
+  width: 50%;
+  height: 100%;
+}
+
+.content {
+  display: inline-block;
+  width: 100%;
+}
+
+.img-login {
+  max-width: 350px;
+}
+
+@media (max-width: 1200px) {
+  .img-login {
+    max-width: 290px;
+  }
+}
+
+@media (max-width: 960px) {
+  .img-login {
+    max-width: 280px;
+  }
+}
+
+.inputs {
+  float: right;
+  width: 50%;
+}
+
+@media (max-width: 760px) {
+  .inputs {
+    padding: 10px;
+    width: 90%;
+  }
+}
+
+.header {
+  padding: 15px;
+  text-align: center;
+}
+
+.form-controller input {
+  height: 35px;
+  width: 98%;
+  border-radius: 5px;
+  border: none;
+  background: #aed0dd;
+}
+
+.form-controller input:focus {
+  outline: none;
+  border: black 1px solid;
+}
+
+.form-lbl {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.form-checkbox input {
+  width: 15px;
+  height: 15px;
+}
+
+.btn, .btn-success {
+  margin: 6px 5px;
+  text-align: center;
+  border: none;
+  padding: 9px 15px;
+  color: black;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.btn:focus, .btn-success:focus {
+  outline: none;
+}
+
+.btn-success {
+  background: rgba(6, 165, 6, 0.603);
+}
+
+.btn-success:hover {
+  background: rgba(6, 165, 6, 0.486);
+}
+
+.block {
+  display: block;
+}
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fri2Ends.Identity", "Fri2Ends.Identity.csproj", "{3719FC00-34C5-4D2F-B8FC-9F6F33118220}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3719FC00-34C5-4D2F-B8FC-9F6F33118220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3719FC00-34C5-4D2F-B8FC-9F6F33118220}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3719FC00-34C5-4D2F-B8FC-9F6F33118220}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3719FC00-34C5-4D2F-B8FC-9F6F33118220}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3719FC00-34C5-4D2F-B8FC-9F6F33118220}.Release|x64.ActiveCfg = Release|Any CPU
+		{3719FC00-34C5-4D2F-B8FC-9F6F33118220}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE2937CB-4FDA-4556-8B42-51628559216F}
+	EndGlobalSection
+EndGlobal
