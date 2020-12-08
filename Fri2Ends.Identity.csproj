@@ -14,4 +14,13 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Context\" />
+    <Folder Include="DomainClass\" />
+    <Folder Include="Services\Repository\" />
+    <Folder Include="Services\Srevices\" />
+    <Folder Include="Tools\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
 </Project>
