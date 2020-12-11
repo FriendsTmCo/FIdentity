@@ -64,6 +64,17 @@ public record Users
     public string PhoneNumber { get; set; }
 
     /// <summary>
+    /// User Password
+    /// Like 1*5GHas25//
+    /// </summary>
+    [Display(Name = "Password")]
+    [Required(ErrorMessage = "{0} Cant Be Null")]
+    [MaxLength(27,ErrorMessage = "{0} Cant Upper Than {1}")]
+    [MinLength(6,ErrorMessage = "{0} Cant Smaller Than {1}")]
+    [DataType(DataType.Password)]
+    public string Password { get; set; }
+
+    /// <summary>
     /// User Is Active Or Is Confirm With Phone Number Or Email Address
     /// </summary>
     [Display(Name = "IS Confrim")]
