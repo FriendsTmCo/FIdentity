@@ -13,5 +13,7 @@ namespace Fri2Ends.Identity.Context
         {
 
         }
+
+        public DbSet<Roles> Roles { get; set; }
     }
 }
