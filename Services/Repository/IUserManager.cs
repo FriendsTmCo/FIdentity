@@ -15,6 +15,9 @@ namespace Fri2Ends.Identity.Services.Repository
         Task<bool> UpdateAsync(Users user);
         Task<bool> DeleteAsync(Users user);
         Task<bool> DeleteAsync(int userId);
+        Task<bool> IsExistAsync(int userId);
+        Task<bool> IsExistAsync(string userName);
+        Task<bool> IsExistAsync(Users user);
         Task<bool> SaveAsync();
         bool Save();
     }

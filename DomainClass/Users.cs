@@ -30,18 +30,6 @@ public record Users
     public string UserName { get; set; }
 
     /// <summary>
-    /// Users Full Name
-    /// First Name 
-    /// Last Name
-    /// Like User First Name + User Last Name
-    /// </summary>
-    [Display(Name = "Name")]
-    [Required(ErrorMessage = "{0} Cant Be Null")]
-    [MaxLength(50, ErrorMessage = "{0} Cant Upper Than {1}")]
-    [MinLength(5, ErrorMessage = "{0} Cant Smaller {1}")]
-    public string Name { get; set; }
-
-    /// <summary>
     /// Users Email Address
     /// Like Users@OutLook.com
     /// </summary>

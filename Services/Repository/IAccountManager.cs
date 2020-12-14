@@ -39,11 +39,42 @@ namespace Fri2Ends.Identity.Services.Repository
         Task<DeleteAccountResponse> DeleteAccountAsync(DeleteAccountViewModel deleteAccount);
 
         /// <summary>
+        /// Check User Has Role 
+        /// </summary>
+        /// <param name="userName">User Name</param>
+        /// <param name="roleName">Role Name</param>
+        /// <returns></returns>
+        Task<bool> IsInRoleAsync(string userName, string roleName);
+
+        /// <summary>
+        /// Check User Has Role
+        /// </summary>
+        /// <param name="user">User Model</param>
+        /// <param name="roleName">Role Name</param>
+        /// <returns></returns>
+        Task<bool> IsInRoleAsync(Users user, string roleName);
+
+        /// <summary>
+        /// Check User Has Role
+        /// </summary>
+        /// <param name="cookies">Request Cookies</param>
+        /// <param name="roleName">Role Name</param>
+        /// <returns></returns>
+        Task<bool> IsInRoleAsync(IRequestCookieCollection cookies, string roleName);
+
+        /// <summary>
         /// Logout User
         /// </summary>
         /// <param name="cookies">User Header Cookies
         /// var cookies = HttpContext.Request.Cookies</param>
         /// <returns></returns>
         Task<bool> LogoutAsync(IRequestCookieCollection cookies);
+
+        /// <summary>
+        /// Logout User Client(api)
+        /// </summary>
+        /// <param name="headers">Request Headers</param>
+        /// <returns></returns>
+        Task<bool> LogoutAsync(IHeaderDictionary headers);
     }
 }
