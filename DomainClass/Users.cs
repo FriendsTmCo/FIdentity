@@ -18,7 +18,7 @@ public record Users
     /// Like UserName
     /// </summary>
     [Key]
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 
     /// <summary>
     /// Users UserName 

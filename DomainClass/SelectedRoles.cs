@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 /// <summary>
 /// User Selected Roles Data Base Table
@@ -24,13 +21,13 @@ public record SelectedRoles
     /// User Id 
     /// </summary>
     [Required]
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 
     /// <summary>
     /// Role Id
     /// </summary>
     [Required]
-    public int RoleId { get; set; }
+    public Guid RoleId { get; set; }
 
     //Relationships 
 

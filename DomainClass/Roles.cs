@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 /// <summary>
@@ -15,7 +16,7 @@ public record Roles
     /// Role Id Primary Key
     /// </summary>
     [Key]
-    public int RoleId { get; set; }
+    public Guid RoleId { get; set; }
 
     /// <summary>
     /// Role Title
