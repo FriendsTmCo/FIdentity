@@ -24,7 +24,7 @@ namespace Fri2Ends.Identity.Services.Srevices
         /// <summary>
         /// Crud Services For Tokens
         /// </summary>
-        private readonly ICrudManager<Tokens> _rokenCrud;
+        private readonly ICrudManager<Tokens> _tokenCrud;
 
         /// <summary>
         /// Crud Services For Users
@@ -36,7 +36,7 @@ namespace Fri2Ends.Identity.Services.Srevices
             _token = token;
             _userCrud = user;
             _user = user;
-            _rokenCrud = token;
+            _tokenCrud = token;
         }
 
         #endregion
@@ -81,7 +81,7 @@ namespace Fri2Ends.Identity.Services.Srevices
             return await Task.Run(async () =>
             {
                 var token = cookies["Token"];
-                bool tokenRes = await _token.DeleteAsync(token) && await _token.SaveAsync();
+                bool tokenRes = await _tokenCrud.DeleteAsync(token) && await _tokenCrud.SaveAsync();
                 return tokenRes;
             });
         }
@@ -91,7 +91,7 @@ namespace Fri2Ends.Identity.Services.Srevices
             return await Task.Run(async () =>
             {
                 var token = headers["Token"];
-                bool tokenRes = await _token.DeleteAsync(token) && await _token.SaveAsync();
+                bool tokenRes = await _tokenCrud.DeleteAsync(token) && await _tokenCrud.SaveAsync();
                 return tokenRes;
             });
         }
@@ -104,7 +104,8 @@ namespace Fri2Ends.Identity.Services.Srevices
                 var user = await CreateUserAsync(signUp);
                 if (!await _user.IsExistAsync(user.UserName))
                 {
-                    if (await _user.InsertAsync(user) && await _user.SaveAsync())
+                  
+                    if (await _userCrud.InsertAsync(user) && await _userCrud.SaveAsync())
                     {
                         response.Success = true;
                         return response;

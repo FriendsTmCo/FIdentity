@@ -6,8 +6,26 @@ using System.Threading.Tasks;
 
 namespace Fri2Ends.Identity.Services.Srevices
 {
-    public class UserManager : IUserManager, ICrudManager<Users> , IDisposable
+    public class UserManager : IUserManager, ICrudManager<Users>, IDisposable
     {
+        public async Task<Users> CreateUserAsync(SignupViewModel signp)
+        {
+            return await Task.Run(() =>
+            {
+                return new Users()
+                {
+                    ActiveCode = Guid.NewGuid().GetHashCode().ToString().Replace("-","").Substring(4,4),
+                    ActiveDate = DateTime.Now,
+                    Email = signp.Email,
+                    IsConfirm = false,
+                    Password = signp.Password.CreateSHA256(),
+                    PhoneNumber = signp.PhoneNumber,
+                    UserName = signp.UserName,
+                    UserId = Guid.NewGuid()
+                };
+            });
+        }
+
         public Task<bool> DeleteAsync(Users model)
         {
             throw new NotImplementedException();

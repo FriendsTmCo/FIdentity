@@ -17,6 +17,7 @@ public record Users
     /// User Id Primary key
     /// Like UserName
     /// </summary>
+    [Required]
     [Key]
     public Guid UserId { get; set; }
 
