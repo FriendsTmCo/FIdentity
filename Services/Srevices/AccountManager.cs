@@ -11,14 +11,32 @@ namespace Fri2Ends.Identity.Services.Srevices
     {
         #region --Dependency--
 
+        /// <summary>
+        /// Users Services
+        /// </summary>
         private readonly IUserManager _user;
 
+        /// <summary>
+        /// Token Services
+        /// </summary>
         private readonly ITokenManager _token;
+
+        /// <summary>
+        /// Crud Services For Tokens
+        /// </summary>
+        private readonly ICrudManager<Tokens> _rokenCrud;
+
+        /// <summary>
+        /// Crud Services For Users
+        /// </summary>
+        private readonly ICrudManager<Users> _userCrud;
 
         public AccountManager(UserManager user,TokenManager token)
         {
             _token = token;
+            _userCrud = user;
             _user = user;
+            _rokenCrud = token;
         }
 
         #endregion
@@ -44,6 +62,11 @@ namespace Fri2Ends.Identity.Services.Srevices
         }
 
         public Task<bool> IsInRoleAsync(IRequestCookieCollection cookies, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> IsInRoleAsync(IHeaderDictionary headers, string roleName)
         {
             throw new NotImplementedException();
         }

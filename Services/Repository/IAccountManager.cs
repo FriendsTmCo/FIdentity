@@ -63,6 +63,14 @@ namespace Fri2Ends.Identity.Services.Repository
         Task<bool> IsInRoleAsync(IRequestCookieCollection cookies, string roleName);
 
         /// <summary>
+        /// Check User Has Role 
+        /// </summary>
+        /// <param name="headers">Request Headers</param>
+        /// <param name="roleName">Role Name</param>
+        /// <returns></returns>
+        Task<bool> IsInRoleAsync(IHeaderDictionary headers, string roleName);
+
+        /// <summary>
         /// Logout User
         /// </summary>
         /// <param name="cookies">User Header Cookies

@@ -15,7 +15,7 @@ public record LoginLogs
     /// Log Id Primary Key
     /// </summary>
     [Key]
-    public int LogId { get; set; }
+    public Guid LogId { get; set; }
 
     /// <summary>
     /// Local Device Ip Address
@@ -51,13 +51,7 @@ public record LoginLogs
     /// Token Id Relationshis
     /// </summary>
     [Required]
-    public int TokenId { get; set; }
+    public Guid TokenId { get; set; }
 
-    //Realtionships
-
-    /// <summary>
-    /// Relationships Table with Tokens
-    /// </summary>
-    public virtual Tokens Tokens { get; set; }
 }
 
