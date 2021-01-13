@@ -69,7 +69,7 @@ namespace Fri2Ends.Identity.Services.Srevices
             throw new NotImplementedException();
         }
 
-        public Task<LoginResponse> LoginAsync(LoginViewModel login, bool rememmeberMe, int expireDays = 20)
+        public async Task<LoginResponse> LoginAsync(LoginViewModel login, bool rememmeberMe, int expireDays = 20)
         {
             throw new NotImplementedException();
         }
