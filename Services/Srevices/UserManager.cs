@@ -1,6 +1,9 @@
-﻿using Fri2Ends.Identity.Services.Repository;
+﻿using Fri2Ends.Identity.Context;
+using Fri2Ends.Identity.Services.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -8,13 +11,24 @@ namespace Fri2Ends.Identity.Services.Srevices
 {
     public class UserManager : IUserManager, ICrudManager<Users>, IDisposable
     {
+        #region ::Dependency::
+
+        private readonly FIdentityContext _db;
+
+        public UserManager(FIdentityContext db)
+        {
+            _db = db;
+        }
+
+        #endregion
+
         public async Task<Users> CreateUserAsync(SignupViewModel signp)
         {
             return await Task.Run(() =>
             {
                 return new Users()
                 {
-                    ActiveCode = Guid.NewGuid().GetHashCode().ToString().Replace("-","").Substring(4,4),
+                    ActiveCode = Guid.NewGuid().GetHashCode().ToString().Replace("-", "").Substring(4, 4),
                     ActiveDate = DateTime.Now,
                     Email = signp.Email,
                     IsConfirm = false,
@@ -26,69 +40,116 @@ namespace Fri2Ends.Identity.Services.Srevices
             });
         }
 
-        public Task<bool> DeleteAsync(Users model)
+        public async Task<bool> DeleteAsync(Users model)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    _db.Users.Remove(model);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
 
-        public Task<bool> DeleteAsync(object id)
+        public async Task<bool> DeleteAsync(object id)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () => await DeleteAsync(await GetbyIdAsync(id)));
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
-            throw new NotImplementedException();
+            await _db.DisposeAsync();
         }
 
-        public Task<IEnumerable<Users>> GetAllAsync()
+        public async Task<IEnumerable<Users>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () => await _db.Users.ToListAsync());
         }
 
-        public Task<IEnumerable<Users>> GetAllAsync(Expression<Func<Users, bool>> where)
+        public async Task<IEnumerable<Users>> GetAllAsync(Expression<Func<Users, bool>> where)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () => await _db.Users.Where(where).ToListAsync());
         }
 
-        public Task<Users> GetbyIdAsync(object id)
+        public async Task<Users> GetbyIdAsync(object id)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () => await _db.Users.FindAsync(id));
         }
 
-        public Task<IEnumerable<Users>> GetUsersBySearchAsync(string q)
+        public async Task<IEnumerable<Users>> GetUsersBySearchAsync(string q)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () => await GetAllAsync(u => u.UserName.Contains(q) ||
+            u.Email.Contains(q) ||
+            u.PhoneNumber.Contains(q)));
         }
 
-        public Task<bool> InsertAsync(Users model)
+        public async Task<bool> InsertAsync(Users model)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    await _db.Users.AddAsync(model);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
 
-        public Task<bool> IsExistAsync(int userId)
+        public async Task<bool> IsExistAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () => await _db.Users.AnyAsync(u => u.UserId == userId));
         }
 
-        public Task<bool> IsExistAsync(string userName)
+        public async Task<bool> IsExistAsync(string userName)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () => await _db.Users.AnyAsync(u => u.UserName == userName));
         }
 
-        public Task<bool> IsExistAsync(Users user)
+        public async Task<bool> IsExistAsync(Users user)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () => await _db.Users.AnyAsync(u => u.UserId == user.UserId &&
+            u.UserName == user.UserName));
         }
 
-        public Task<bool> SaveAsync()
+        public async Task<bool> SaveAsync()
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    await _db.SaveChangesAsync();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
 
-        public Task<bool> UpdateAsync(Users model)
+        public async Task<bool> UpdateAsync(Users model)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() =>
+           {
+               try
+               {
+                   _db.Users.Update(model);
+                   return true;
+               }
+               catch
+               {
+                   return false;
+               }
+           });
         }
     }
 }
