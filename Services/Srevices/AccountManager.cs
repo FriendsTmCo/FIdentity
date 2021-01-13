@@ -31,7 +31,7 @@ namespace Fri2Ends.Identity.Services.Srevices
         /// </summary>
         private readonly ICrudManager<Users> _userCrud;
 
-        public AccountManager(UserManager user,TokenManager token)
+        public AccountManager(UserManager user, TokenManager token)
         {
             _token = token;
             _userCrud = user;
@@ -81,8 +81,7 @@ namespace Fri2Ends.Identity.Services.Srevices
             return await Task.Run(async () =>
             {
                 var token = cookies["Token"];
-                bool tokenRes = await _tokenCrud.DeleteAsync(token) && await _tokenCrud.SaveAsync();
-                return tokenRes;
+                return await _tokenCrud.DeleteAsync(token) && await _tokenCrud.SaveAsync();
             });
         }
 
@@ -91,8 +90,7 @@ namespace Fri2Ends.Identity.Services.Srevices
             return await Task.Run(async () =>
             {
                 var token = headers["Token"];
-                bool tokenRes = await _tokenCrud.DeleteAsync(token) && await _tokenCrud.SaveAsync();
-                return tokenRes;
+                return await _tokenCrud.DeleteAsync(token) && await _tokenCrud.SaveAsync();
             });
         }
 
@@ -101,10 +99,10 @@ namespace Fri2Ends.Identity.Services.Srevices
             return await Task.Run(async () =>
             {
                 SignUpResponse response = new();
-                var user = await CreateUserAsync(signUp);
+                var user = await _user.CreateUserAsync(signUp);
                 if (!await _user.IsExistAsync(user.UserName))
                 {
-                  
+
                     if (await _userCrud.InsertAsync(user) && await _userCrud.SaveAsync())
                     {
                         response.Success = true;
@@ -119,22 +117,6 @@ namespace Fri2Ends.Identity.Services.Srevices
             });
         }
 
-        private async Task<Users> CreateUserAsync(SignupViewModel signup)
-        {
-            return await Task.Run(() =>
-            {
-                Users user = new()
-                {
-                    ActiveCode = Guid.NewGuid().GetHashCode().ToString().Replace("-", string.Empty).Substring(4, 4),
-                    ActiveDate = DateTime.Now,
-                    Email = signup.Email,
-                    IsConfirm = false,
-                    UserName = signup.UserName.Trim().ToLower(),
-                    Password = signup.Password.CreateSHA256(),
-                    PhoneNumber = signup.PhoneNumber
-                };
-                return user;
-            });
-        }
+       
     }
 }

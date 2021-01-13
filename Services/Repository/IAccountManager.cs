@@ -22,7 +22,7 @@ namespace Fri2Ends.Identity.Services.Repository
         /// <param name="rememmeberMe">Set Cookies For Remember User</param>
         /// <param name="expireDays">Expire Days Default 20 days</param>
         /// <returns></returns>
-        Task<LoginResponse> LoginAsync(LoginViewModel login,bool rememmeberMe,int expireDays = 20);
+        Task<LoginResponse> LoginAsync(LoginViewModel login, bool rememmeberMe, int expireDays = 20);
 
         /// <summary>
         /// Active or Confitm Existing User Account
@@ -84,5 +84,6 @@ namespace Fri2Ends.Identity.Services.Repository
         /// <param name="headers">Request Headers</param>
         /// <returns></returns>
         Task<bool> LogoutAsync(IHeaderDictionary headers);
+
     }
 }
