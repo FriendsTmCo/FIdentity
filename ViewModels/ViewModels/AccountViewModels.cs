@@ -25,6 +25,13 @@ public record LoginViewModel
     [MinLength(6, ErrorMessage = "{0} Cant Smaller Than {1}")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
+
+    /// <summary>
+    /// Rememeber Me
+    /// </summary>
+    [Display(Name = "Remember Me")]
+    [Required]
+    public bool RememberMe { get; set; }
 }
 
 

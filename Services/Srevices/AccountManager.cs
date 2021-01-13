@@ -29,8 +29,14 @@ namespace Fri2Ends.Identity.Services.Srevices
         /// </summary>
         private readonly ICrudManager<Users> _userCrud;
 
-        public AccountManager(UserManager user, TokenManager token)
+        /// <summary>
+        /// Log Services For Login Logs
+        /// </summary>
+        private readonly ICrudManager<LoginLogs> _logCrud;
+
+        public AccountManager(UserManager user, TokenManager token, LoginLogsManager logs)
         {
+            _logCrud = logs;
             _token = token;
             _userCrud = user;
             _user = user;
@@ -75,7 +81,7 @@ namespace Fri2Ends.Identity.Services.Srevices
             throw new NotImplementedException();
         }
 
-        public async Task<LoginResponse> LoginAsync(LoginViewModel login, bool rememmeberMe, int expireDays = 20)
+        public async Task<LoginResponse> LoginAsync(LoginViewModel login, bool rememmeberMe, int expireDays = 20, HttpContext context = null)
         {
             return await Task.Run(async () =>
             {
@@ -89,12 +95,20 @@ namespace Fri2Ends.Identity.Services.Srevices
                         Tokens token = await CreateTokenAsync(user, expireDays);
                         if (await _tokenCrud.InsertAsync(token) && await _tokenCrud.SaveAsync())
                         {
-                            response.Success = new Success()
+                            LoginLogs log = await CreateLogAsync(token, context);
+                            await _logCrud.InsertAsync(log); await _logCrud.SaveAsync();
+
+                            //Create Success Type 
+                            if (rememmeberMe)
                             {
-                                IsSucces = true,
-                                Key = token.TokenKey,
-                                Value = token.TokenValue
-                            };
+                                response.Success = new Success
+                                {
+                                    IsSucces = true,
+                                    Key = token.TokenKey,
+                                    Value = token.TokenValue
+                                };
+                            }
+
                             response.Status = LoginStatus.Success;
                             return response;
                         }
@@ -162,5 +176,20 @@ namespace Fri2Ends.Identity.Services.Srevices
             });
         }
 
+        private async Task<LoginLogs> CreateLogAsync(Tokens token, HttpContext context)
+        {
+            return await Task.Run(() =>
+            {
+                return new LoginLogs
+                {
+                    LocalIpAddress = context.Connection.LocalIpAddress.ToString(),
+                    LocalPort = context.Connection.LocalPort.ToString(),
+                    RemoteIpAddress = context.Connection.RemoteIpAddress.ToString(),
+                    RemotePort = context.Connection.RemotePort.ToString(),
+                    SetDate = DateTime.Now,
+                    TokenId = token.TokenId
+                };
+            });
+        }
     }
 }

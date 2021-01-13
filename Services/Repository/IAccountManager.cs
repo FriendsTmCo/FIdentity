@@ -21,8 +21,9 @@ namespace Fri2Ends.Identity.Services.Repository
         /// <param name="login">Login View Model</param>
         /// <param name="rememmeberMe">Set Cookies For Remember User</param>
         /// <param name="expireDays">Expire Days Default 20 days</param>
+        /// <param name="context">Http Current Context</param>
         /// <returns></returns>
-        Task<LoginResponse> LoginAsync(LoginViewModel login, bool rememmeberMe, int expireDays = 20);
+        Task<LoginResponse> LoginAsync(LoginViewModel login, bool rememmeberMe, int expireDays = 20,HttpContext context = null);
 
         /// <summary>
         /// Active or Confitm Existing User Account
