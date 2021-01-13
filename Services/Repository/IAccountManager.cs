@@ -85,5 +85,15 @@ namespace Fri2Ends.Identity.Services.Repository
         /// <returns></returns>
         Task<bool> LogoutAsync(IHeaderDictionary headers);
 
+        /// <summary>
+        /// Check Password
+        /// </summary>
+        /// <param name="user">Current User</param>
+        /// <param name="currentPassword">Current Password</param>
+        /// <returns>
+        /// Passwrod Is Ok = True
+        /// Wrong Password = False</returns>
+        Task<bool> CheckPasswordAsync(Users user, string currentPassword);
+
     }
 }

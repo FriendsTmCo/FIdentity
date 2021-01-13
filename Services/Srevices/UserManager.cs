@@ -81,6 +81,16 @@ namespace Fri2Ends.Identity.Services.Srevices
             return await Task.Run(async () => await _db.Users.FindAsync(id));
         }
 
+        public Task<Users> GetUserByEmailAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Users> GetUserByUserNameAsync(string userName)
+        {
+            return await Task.Run(async () => await _db.Users.FirstOrDefaultAsync(u => u.UserName == userName));
+        }
+
         public async Task<IEnumerable<Users>> GetUsersBySearchAsync(string q)
         {
             return await Task.Run(async () => await GetAllAsync(u => u.UserName.Contains(q) ||

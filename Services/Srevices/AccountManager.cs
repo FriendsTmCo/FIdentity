@@ -44,6 +44,12 @@ namespace Fri2Ends.Identity.Services.Srevices
             throw new NotImplementedException();
         }
 
+        public async Task<bool> CheckPasswordAsync(Users user, string currentPassword)
+        {
+            return await Task.Run(async () =>
+                 user.Password == await currentPassword.CreateSHA256Async());
+        }
+
         public Task<DeleteAccountResponse> DeleteAccountAsync(DeleteAccountViewModel deleteAccount)
         {
             throw new NotImplementedException();
@@ -71,7 +77,39 @@ namespace Fri2Ends.Identity.Services.Srevices
 
         public async Task<LoginResponse> LoginAsync(LoginViewModel login, bool rememmeberMe, int expireDays = 20)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () =>
+            {
+                LoginResponse response = new();
+
+                Users user = await _user.GetUserByEmailAsync(login.Email);
+                if (user != null)
+                {
+                    if (await CheckPasswordAsync(user, login.Password))
+                    {
+                        Tokens token = await CreateTokenAsync(user, expireDays);
+                        if (await _tokenCrud.InsertAsync(token) && await _tokenCrud.SaveAsync())
+                        {
+                            response.Success = new Success()
+                            {
+                                IsSucces = true,
+                                Key = token.TokenKey,
+                                Value = token.TokenValue
+                            };
+                            response.Status = LoginStatus.Success;
+                            return response;
+                        }
+                        response.Status = LoginStatus.Exception;
+                        return response;
+                    }
+                    response.Status = LoginStatus.WrongPassword;
+                    return response;
+                }
+
+                response.Status = LoginStatus.UserNotFound;
+                return response;
+
+
+            });
         }
 
         public async Task<bool> LogoutAsync(IRequestCookieCollection cookies)
@@ -96,11 +134,9 @@ namespace Fri2Ends.Identity.Services.Srevices
         {
             return await Task.Run(async () =>
             {
-
                 var user = await _user.CreateUserAsync(signUp);
                 if (!await _user.IsExistAsync(user.UserName))
                 {
-
                     if (await _userCrud.InsertAsync(user) && await _userCrud.SaveAsync())
                     {
                         return SignUpResponse.Success;
@@ -111,6 +147,20 @@ namespace Fri2Ends.Identity.Services.Srevices
             });
         }
 
+        private async Task<Tokens> CreateTokenAsync(Users user, int expire)
+        {
+            return await Task.Run(() =>
+            {
+                return new Tokens
+                {
+                    UserId = user.UserId,
+                    InsertDate = DateTime.Now,
+                    ExpireDate = DateTime.Now.AddDays(expire),
+                    TokenKey = "Token",
+                    TokenValue = Guid.NewGuid().ToString().CreateSHA256()
+                };
+            });
+        }
 
     }
 }
