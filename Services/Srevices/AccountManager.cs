@@ -96,25 +96,21 @@ namespace Fri2Ends.Identity.Services.Srevices
         {
             return await Task.Run(async () =>
             {
-                SignUpResponse response = new();
+
                 var user = await _user.CreateUserAsync(signUp);
                 if (!await _user.IsExistAsync(user.UserName))
                 {
 
                     if (await _userCrud.InsertAsync(user) && await _userCrud.SaveAsync())
                     {
-                        response.Success = true;
-                        return response;
+                        return SignUpResponse.Success;
                     }
-
-                    response.Exception = true;
-                    return response;
+                    return SignUpResponse.Exception;
                 }
-                response.UserAlreadyExist = true;
-                return response;
+                return SignUpResponse.UserAlreadyExist;
             });
         }
 
-       
+
     }
 }
