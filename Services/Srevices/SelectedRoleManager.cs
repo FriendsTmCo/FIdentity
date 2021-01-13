@@ -1,4 +1,6 @@
-﻿using Fri2Ends.Identity.Services.Repository;
+﻿using Fri2Ends.Identity.Context;
+using Fri2Ends.Identity.Services.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -8,6 +10,17 @@ namespace Fri2Ends.Identity.Services.Srevices
 {
     public class SelectedRoleManager : ISelectedRoleManager, ICrudManager<SelectedRoles>, IDisposable
     {
+        #region ::Dependency::
+
+        private readonly FIdentityContext _db;
+
+        public SelectedRoleManager(FIdentityContext db)
+        {
+            _db = db;
+        }
+
+        #endregion
+
         public Task<bool> DeleteAsync(SelectedRoles model)
         {
             throw new NotImplementedException();
@@ -41,6 +54,11 @@ namespace Fri2Ends.Identity.Services.Srevices
         public Task<bool> InsertAsync(SelectedRoles model)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> IsExistAsync(Guid userId, Guid roleId)
+        {
+            return await Task.Run(async () => await _db.SelectedRoles.AnyAsync(s => s.UserId == userId && s.RoleId == roleId));
         }
 
         public Task<bool> SaveAsync()

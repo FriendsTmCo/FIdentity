@@ -24,9 +24,11 @@ namespace Fri2Ends.Identity.Controllers.Api
 
         #region --Login--
 
+        [HttpPost]
+        [Route("Login")]
         public async Task<IActionResult> Login(LoginViewModel login)
         {
-            var result = await _account.LoginAsync(login, login.RememberMe, 20, HttpContext);
+            LoginResponse result = await _account.LoginAsync(login, login.RememberMe, 20, HttpContext);
 
             switch (result.Status)
             {
@@ -51,61 +53,56 @@ namespace Fri2Ends.Identity.Controllers.Api
 
         #region --SignUp--
 
-        public async Task<IActionResult> SignUp(SignUpViewModel signUp)
+        [HttpPost]
+        [Route("SignUp")]
+        public async Task<IActionResult> SignUp(SignupViewModel signUp)
         {
-            return await Task.Run(async () =>
+            SignUpResponse result = await _account.SignUpAsync(signUp);
+
+            switch (result)
             {
-                var result = await _accountUser.SignUpAsync(signUp);
+                case SignUpResponse.Success:
+                    return Ok(new { Id = 0, Title = "Success Go To Active Account", Result = new { } });
 
-                switch (result)
-                {
-                    case var _ when result.UserExist:
-                        return Ok(new ApiResponse<object>()
-                        {
-                            errorId = "-5",
-                            errorTitle = "User Already Exist",
-                            result = new { }
-                        });
+                case SignUpResponse.Exception:
+                    return Ok(new { Id = -2, Title = "Exception", Result = new { } });
 
-                    case var _ when result.IsBlocked:
-                        return Ok(new ApiResponse<object>()
-                        {
-                            errorId = "-6",
-                            errorTitle = "User Blocked Please Try Latter",
-                            result = new { }
-                        });
+                case SignUpResponse.UserAlreadyExist:
+                    return Ok(new { Id = -3, Title = "User Already Exist", Result = new { } });
 
-                    case var _ when result.Success:
-                        return Ok(new ApiResponse<object>()
-                        {
-                            errorId = "0",
-                            errorTitle = "Success To Sign Up Go For Activation and Login",
-                            result = new { }
-                        });
-
-                    case var _ when result.SystemException:
-                        return Ok(new ApiResponse<List<string>>()
-                        {
-                            errorId = "-3",
-                            errorTitle = "Exception Please Try Latter",
-                            result = new List<string>() { }
-                        });
-
-                    default:
-                        return Ok(new ApiResponse<object>()
-                        {
-                            errorId = "-4",
-                            errorTitle = "Null",
-                            result = new { }
-                        });
-                }
-#pragma warning disable CS0162 // Unreachable code detected
-                await _accountUser.Save();
-#pragma warning restore CS0162 // Unreachable code detected
-            });
+                default:
+                    goto case SignUpResponse.Exception;
+            }
         }
 
         #endregion
+
+        #region --Activation--
+
+        [HttpPost]
+        [Route("Activation")]
+        public async Task<IActionResult> Activation(ActivationViewModel activation)
+        {
+            ActivationResponse result = await _account.ActiveUserAsync(activation);
+
+            switch (result)
+            {
+                case ActivationResponse.Success:
+                    return Ok(new { Id = 0, Title = "User Actived", Result = new { } });
+
+                case ActivationResponse.WrongActiveCode:
+                    return Ok(new { Id = -1, Title = "Wrong ActiveCode", Result = new { } });
+
+                case ActivationResponse.Exception:
+                    return Ok(new { Id = -3, Title = "Exception", Result = new { } });
+
+                default:
+                    goto case ActivationResponse.Exception;
+            }
+        }
+
+        #endregion
+
 
     }
 }

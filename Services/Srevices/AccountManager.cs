@@ -34,8 +34,20 @@ namespace Fri2Ends.Identity.Services.Srevices
         /// </summary>
         private readonly ICrudManager<LoginLogs> _logCrud;
 
-        public AccountManager(UserManager user, TokenManager token, LoginLogsManager logs)
+        /// <summary>
+        /// Role Services
+        /// </summary>
+        private readonly IRoleManager _role;
+
+        /// <summary>
+        /// Selected Role Services
+        /// </summary>
+        private readonly ISelectedRoleManager _selectedRole;
+
+        public AccountManager(UserManager user, TokenManager token, LoginLogsManager logs, RoleManager role, SelectedRoleManager selectedRole)
         {
+            _selectedRole = selectedRole;
+            _role = role;
             _logCrud = logs;
             _token = token;
             _userCrud = user;
@@ -61,19 +73,30 @@ namespace Fri2Ends.Identity.Services.Srevices
             throw new NotImplementedException();
         }
 
-        public Task<bool> IsInRoleAsync(string userName, string roleName)
+        public async Task<bool> IsInRoleAsync(string userName, string roleName)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () =>
+            {
+                Users user = await _user.GetUserByUserNameAsync(userName);
+                return await IsInRoleAsync(user, roleName);
+            });
         }
 
-        public Task<bool> IsInRoleAsync(Users user, string roleName)
+        public async Task<bool> IsInRoleAsync(Users user, string roleName)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () =>
+            {
+                Roles role = await _role.GetRoleByNameAsync(roleName);
+                return await _selectedRole.IsExistAsync(user.UserId, role.RoleId);
+            });
         }
 
-        public Task<bool> IsInRoleAsync(IRequestCookieCollection cookies, string roleName)
+        public async Task<bool> IsInRoleAsync(IRequestCookieCollection cookies, string roleName)
         {
-            throw new NotImplementedException();
+            return await Task.Run(async () =>
+            {
+                return true;
+            });
         }
 
         public Task<bool> IsInRoleAsync(IHeaderDictionary headers, string roleName)
