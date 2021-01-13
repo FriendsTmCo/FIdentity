@@ -1,22 +1,22 @@
 ﻿/// <summary>
 /// Signup Response
 /// </summary>
-public record SignUpResponse
+public enum SignUpResponse
 {
     /// <summary>
     /// SignUp SuccessFully
     /// </summary>
-    public bool Success { get; set; }
+    Success = 0,
 
     /// <summary>
     /// System Exceptions
     /// </summary>
-    public bool Exception { get; set; }
+    Exception = -2,
 
     /// <summary>
     /// User Exist
     /// </summary>
-    public bool UserAlreadyExist { get; set; }
+    UserAlreadyExist = -3
 }
 
 /// <summary>
@@ -31,55 +31,56 @@ public record LoginResponse
     public Success Success { get; set; }
 
     /// <summary>
-    /// System Exceptions
+    /// Action Status
     /// </summary>
-    public bool Exception { get; set; }
-
-    /// <summary>
-    /// Wrong Password
-    /// </summary>
-    public bool WrongPassword { get; set; }
-
-    /// <summary>
-    /// Not Found Any User
-    /// </summary>
-    public bool UserNotFound { get; set; }
+    public LoginStatus Status { get; set; }
 }
 
-public record ActivationResponse
+/// <summary>
+/// Login Status
+/// </summary>
+public enum LoginStatus
+{
+    Success = 0,
+    Exception = -2,
+    WrongPassword = -3,
+    UserNotFound = -4
+}
+
+public enum ActivationResponse
 {
     /// <summary>
     /// Actived User 
     /// </summary>
-    public bool Success { get; set; }
+    Success = 0,
 
     /// <summary>
     /// Wrong Active Code 
     /// </summary>
-    public bool WrongActiveCode { get; set; }
+    WrongActiveCode = -1,
 
     /// <summary>
     /// System Exceptions
     /// </summary>
-    public bool Exception { get; set; }
+    Exception = -2
 }
 
-public record DeleteAccountResponse
+public enum DeleteAccountResponse
 {
     /// <summary>
     /// Delete User 
     /// </summary>
-    public bool Success { get; set; }
+    Success = 0,
 
     /// <summary>
     /// Wrong DeleteCode Code 
     /// </summary>
-    public bool WrongDeleteCode { get; set; }
+    WrongDeleteCode = -1,
 
     /// <summary>
     /// System Exceptions
     /// </summary>
-    public bool Exception { get; set; }
+    Exception = -2
 }
 
 /// <summary>
